@@ -11,11 +11,21 @@ public class GameInput : MonoBehaviour
         {
             ReloadLevel();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitApplication();
+        }
     }
 
     void ReloadLevel()
     {
         int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(activeSceneIndex);
+    }
+
+    void QuitApplication()
+    {
+        Application.Quit();
     }
 }

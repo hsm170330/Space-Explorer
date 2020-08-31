@@ -7,20 +7,49 @@ public class PlayerShip : MonoBehaviour
 {
     [SerializeField] float _moveSpeed = 12f;
     [SerializeField] float _turnSpeed = 3f;
-
+    [SerializeField] GameObject ShipThruster;
+    [SerializeField] GameObject LeftThruster;
+    [SerializeField] GameObject RightThruster;
     Rigidbody _rb = null;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
-
+    public void Start()
+    {
+        ShipThruster.GetComponent<ParticleSystem>().Stop();
+        LeftThruster.GetComponent<ParticleSystem>().Stop();
+        RightThruster.GetComponent<ParticleSystem>().Stop();
+    }
     private void FixedUpdate()
     {
         MoveShip();
         TurnShip();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            ShipThruster.GetComponent<ParticleSystem>().Play();
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            ShipThruster.GetComponent<ParticleSystem>().Stop();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            LeftThruster.GetComponent<ParticleSystem>().Play();
+            RightThruster.GetComponent<ParticleSystem>().Play();
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            LeftThruster.GetComponent<ParticleSystem>().Stop();
+            RightThruster.GetComponent<ParticleSystem>().Stop();
+        }
+    }
     // use forces to build momentum forward/backward
     void MoveShip()
     {
